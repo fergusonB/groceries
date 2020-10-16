@@ -1,4 +1,5 @@
 <script lang="ts">
+	import {fade} from 'svelte/transition'
 
 
 
@@ -66,6 +67,7 @@
 				}
 			}
 			
+			
 	}
 
     const addUser = (input: string): void => {
@@ -89,17 +91,11 @@
 
         }
         
-    };
+	};
+	
 
-    const calcUser = (user: string): number => {
-        let amount: number = 0;
-        for (const ea of items) {
-            if (ea.user === user) {
-                amount += ea.price;
-            }
-        }
-        return amount;
-    };
+
+
 </script>
 
 <style>
@@ -129,13 +125,24 @@
     <p>
         {#if paid && items.length > 0}
             {#key items}
+				<h3>Totals</h3>
 				{#each users as user}
-					 {user.name}
-					 {user.total}
+					 <div in:fade>
+						{user.name} :
+						${user.total.toFixed(2)} 
+					 </div>
 				{/each}
-				
+					
+
+				<h3>Items</h3>
+					 <ul>
+
+				{#each items as item}
+					<li>{item.user === 's' ? 'Everyone' : item.user} bought {item.name} for ${item.price.toFixed(2)}</li>
+				{/each}
+			</ul>
 		
             {/key}
-        {:else}Waiting for items and paid.{/if}
+        {:else}Waiting for items and who paid.{/if}
     </p>
 </main>
