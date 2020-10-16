@@ -21,3 +21,9 @@ npm run dev-electron
     "build-electron": "run-s build start-electron",
     "start-electron": "electron ."
 ```
+
+## Technology
+Application in svelte - typescript / html / css
+Electron wrapper (Yes, since you're wondering, I am aware this is overkill).
+
+

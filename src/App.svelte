@@ -1,9 +1,6 @@
 <script lang="ts">
-
-	
-
-	let userInput: string;
-	let paid:string;
+    let userInput: string;
+    let paid: string;
 
     interface item {
         user: string;
@@ -44,11 +41,17 @@
         if (e.key === "Enter") {
             addItem(userInput);
         }
-	};
-	
-	const paidUser = ():number=>{
-		return 5
-	}
+    };
+
+    const paidUser = () => {
+        let amount = 0;
+        for (const ea of items) {
+            if (ea.user === paid) {
+                amount += ea.price;
+            }
+        }
+        return amount;
+    };
 </script>
 
 <style>
@@ -67,17 +70,19 @@
             id="userinput"
             placeholder="s item 42.42"
             bind:value={userInput}
-			type="text" />
-			<input bind:value={paid} maxlength="1" type="text" placeholder="Who paid?">
+            type="text" />
+        <input
+            bind:value={paid}
+            maxlength="1"
+            type="text"
+            placeholder="Who paid?" />
     </p>
-	<h2>Display</h2>
-	<p>
-		{#if paid && items.length > 0}
-		{paid} paid {paidUser()} 
-		{/if}
-		
-	</p>
-	
-
-
+    <h2>Display</h2>
+    <p>
+        {#if paid && items.length > 0}
+			{#key items}
+				{paid} paid {paidUser()}
+			{/key}
+        {/if}
+    </p>
 </main>
