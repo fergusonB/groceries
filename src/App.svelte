@@ -1,4 +1,7 @@
 <script lang="ts">
+
+
+
     let userInput: string;
     let paid: string;
 
@@ -7,10 +10,22 @@
         name: string;
         price: number;
     }
+    interface user {
+        name: string;
+        total: number;
+    }
 
     let items: item[] = [];
+    let users: user[] = [];
 
-    const validityCheck = (input): boolean => {
+    const onEnter = (e): void => {
+        if (e.key === "Enter") {
+            addUser(userInput);
+            addItem(userInput);
+        }
+    };
+
+    const validityCheck = (input:string): boolean => {
         let splitIn: string[] = input.split(" ");
         if (splitIn[0].length === 1 && Number(splitIn[2])) {
             return true;
@@ -29,24 +44,57 @@
                 price: Number(splitInput[2]),
             };
 
-            items = [...items, entry];
+			items = [...items, entry];
+			
+	
+		
+			updateUser(entry)
+
+
+
             userInput = "";
             document.getElementById("userinput").focus();
         } else {
             userInput = "";
         }
-    };
+	};
+	
+	const updateUser = (entry:item):void=>{
+		for (const ea of users){
+				if (entry.user === ea.name){
+					ea.total+=entry.price
+				}
+			}
+			
+	}
 
-    const onEnter = (e): void => {
-        if (e.key === "Enter") {
-            addItem(userInput);
+    const addUser = (input: string): void => {
+        if (validityCheck(input)) {
+
+            let user: user = {
+                name: input[0],
+                total: 0,
+			};
+			
+			let userFound = false
+			for (const each of users){
+				if (each.name === user.name){
+					userFound =true
+				}
+			}
+			if (! userFound ) users = [...users,user]
+			
+
+
+
         }
+        
     };
 
-    const paidUser = () => {
-        let amount = 0;
+    const calcUser = (user: string): number => {
+        let amount: number = 0;
         for (const ea of items) {
-            if (ea.user === paid) {
+            if (ea.user === user) {
                 amount += ea.price;
             }
         }
@@ -80,9 +128,14 @@
     <h2>Display</h2>
     <p>
         {#if paid && items.length > 0}
-			{#key items}
-				{paid} paid {paidUser()}
-			{/key}
-        {/if}
+            {#key items}
+				{#each users as user}
+					 {user.name}
+					 {user.total}
+				{/each}
+				
+		
+            {/key}
+        {:else}Waiting for items and paid.{/if}
     </p>
 </main>
