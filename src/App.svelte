@@ -94,7 +94,6 @@
 </style>
 
 <main>
-    <h1>Grocery Splitter</h1>
     <h2>Entry</h2>
     <p>
         Format: "s itemName 42.42" 's' is reserved for shared items. Enter key

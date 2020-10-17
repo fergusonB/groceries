@@ -24,6 +24,6 @@ npm run dev-electron
 
 ## Technology
 Application in svelte - typescript / html / css
-Electron wrapper (Yes, since you're wondering, I am aware this is overkill).
+Electron wrapper...
 
 
